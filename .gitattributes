@@ -1,3 +1,4 @@
 CI-Windows-x64-0.2.0-Setup.zip filter=lfs diff=lfs merge=lfs -text
 CircuitInspector-Windows-x64-0.2.0-Setup.exe filter=lfs diff=lfs merge=lfs -text
 CircuitInspector-Windows-x64-0.2.1-Setup.exe filter=lfs diff=lfs merge=lfs -text
+CI-Windows-x64-0.2.1-Setup.zip filter=lfs diff=lfs merge=lfs -text
