@@ -6,3 +6,4 @@ CI-Windows-x64-0.2.2-Setup.zip filter=lfs diff=lfs merge=lfs -text
 docs/CI.zip filter=lfs diff=lfs merge=lfs -text
 docs/release-macos/CircuitInspector-macOS-BuildKit-0.2.4-window-fix.zip filter=lfs diff=lfs merge=lfs -text
 docs/release-macos/release-macos.zip filter=lfs diff=lfs merge=lfs -text
+release/CI-Windows-x64-0.2.5-Setup.exe filter=lfs diff=lfs merge=lfs -text
