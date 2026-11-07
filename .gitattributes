@@ -9,3 +9,4 @@ docs/release-macos/release-macos.zip filter=lfs diff=lfs merge=lfs -text
 release/CI-Windows-x64-0.2.5-Setup.exe filter=lfs diff=lfs merge=lfs -text
 release/CI-Windows-x64-0.2.8-Setup.zip filter=lfs diff=lfs merge=lfs -text
 release/CI-Windows-x64-0.2.8-Setup.exe filter=lfs diff=lfs merge=lfs -text
+release/CI-Windows-x64-0.2.9-Setup.exe filter=lfs diff=lfs merge=lfs -text
