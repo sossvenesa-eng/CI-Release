@@ -12,3 +12,4 @@ release/CI-Windows-x64-0.2.8-Setup.exe filter=lfs diff=lfs merge=lfs -text
 release/CI-Windows-x64-0.2.9-Setup.exe filter=lfs diff=lfs merge=lfs -text
 release/CI-Windows-x64-0.2.10-Setup.exe filter=lfs diff=lfs merge=lfs -text
 release/CI-Windows-x64-0.2.11-Setup.exe filter=lfs diff=lfs merge=lfs -text
+release/CI-Windows-x64-0.2.13-Setup.exe filter=lfs diff=lfs merge=lfs -text
