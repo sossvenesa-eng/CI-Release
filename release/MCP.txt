@@ -1,0 +1,119 @@
+请使用 CircuitInspector MCP 检查产品设计及产品文档是否满足所提供的 DFT 要求，生成检查结果和报告。
+
+输入资料如下，请使用实际文件路径替换。
+
+DFT 要求文档
+D:\TE\DFT_Guideline.pdf
+
+产品制造数据（ODB++ 目录、归档或完整 Gerber 包）
+D:\TE\Product_ODB
+
+产品需求文档（ERS/TRP，可选）
+D:\TE\Product_ERS.xlsx
+
+产品 BRD（可选）
+D:\TE\Product.brd
+
+检查范围
+以所提供 DFT 文档的适用条款为依据，检查工具支持的测试点尺寸、间距、板边距离及相关几何要求。若提供 ERS/TRP，同时核对测试点位号、板面和网络要求。
+
+请按以下步骤执行。
+
+1. 读取 DFT 要求
+
+调用 preview_rule_file：
+
+{
+  "paths": ["D:\\TE\\DFT_Guideline.pdf"]
+}
+
+检查 structuredContent.result 中的 rulePack 和 validation。
+整理提取出的规则、阈值、单位、适用范围和来源引用。
+将无法提取或当前工具无法执行的条款列入待核查清单。
+
+2. 导入产品制造数据
+
+调用 import_design：
+
+{
+  "path": "D:\\TE\\Product_ODB"
+}
+
+保存 structuredContent.id，作为后续 design_id。
+检查导入诊断、图层、测试点及网络语义覆盖情况，确认资料对应同一产品修订。
+
+3. 导入辅助 BRD（提供时执行）
+
+先调用 detect_kicad_cli，再调用 import_brd_test_points：
+
+{
+  "path": "D:\\TE\\Product.brd"
+}
+
+保存 structuredContent.id。
+在下一步 analyze_rule_file 参数中，通过 brd_catalog_id 传入此 ID。
+
+4. 执行 DFT 文档规则检查
+
+调用 analyze_rule_file：
+
+{
+  "path": "D:\\TE\\DFT_Guideline.pdf",
+  "design_id": "<实际返回的 design_id>"
+}
+
+默认检查全部已提取规则。
+如需限定规则，selected_rule_ids 必须使用 preview_rule_file 实际返回的规则 ID。
+
+保存 structuredContent.result.id，作为 analysis_id。
+读取逐条检查结果，记录规则要求、实测值、单位、涉及器件或测试点、板面及位置。
+
+5. 核对 ERS/TRP 产品需求（提供时执行）
+
+调用 analyze_requirements：
+
+{
+  "path": "D:\\TE\\Product_ERS.xlsx",
+  "design_id": "<实际返回的 design_id>",
+  "locale": "zh-CN"
+}
+
+整理测试点匹配、缺失、板面不符和网络不符的结果。
+同时记录文档整体 verdict 与 comparison_summary 的字段比对结论。
+
+6. 导出 DFT 检查报告
+
+调用 export_analysis_report：
+
+{
+  "analysis_id": "<analyze_rule_file 实际返回的 analysis_id>"
+}
+
+使用实际返回的以下路径提供报告链接：
+
+DFT 报告
+structuredContent.result.report_path
+structuredContent.result.csv_report_path
+
+ERS/TRP 报告
+analyze_requirements 返回的 structuredContent.report_path
+analyze_requirements 返回的 structuredContent.csv_report_path
+
+对需要定位的问题，可调用 render_evidence，使用实际的 analysis_id 和 violation_ids 生成图片证据。
+
+判定要求
+- 阈值、单位及适用条件均来自所提供的 DFT 文档。
+- 按实际证据使用 PASS、FAIL、REVIEW、NOT_APPLICABLE。
+- 缺失资料、规则冲突、身份歧义及工具未覆盖的要求，说明具体原因和补充资料需求。
+- 几何检查结论注明其产品版本和规则文档范围。
+- 涉及治具、探针、测试设备或工厂能力的要求，列出所需验证证据。
+
+最终用中文输出
+- 本次输入文件、产品修订及检查范围。
+- 已执行规则和未覆盖条款。
+- 各状态数量及主要问题。
+- 每个问题的规则引用、要求值、实测值、位置和整改建议。
+- DFT 与 ERS/TRP 报告的完整路径及可点击链接。
+
+逐步检查 isError，处理可恢复的调用问题后继续执行。
+如果只有产品 PDF/Word 而缺少制造数据，先完成可识别的 ERS/TRP 字段审查，并明确列出几何检查所需资料。
