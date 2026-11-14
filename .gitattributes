@@ -16,3 +16,4 @@ release/CI-Windows-x64-0.2.13-Setup.exe filter=lfs diff=lfs merge=lfs -text
 release/CI-Windows-x64-0.2.14-Setup.exe filter=lfs diff=lfs merge=lfs -text
 release/MCP.txt -text
 release/MCP.txt whitespace=cr-at-eol
+release/CI-Windows-x64-0.2.18-Setup.exe filter=lfs diff=lfs merge=lfs -text
